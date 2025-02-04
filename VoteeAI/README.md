@@ -1,101 +1,104 @@
-# VoteeAI - Automated Wordle Solver
+# Wordle Solver Service
 
-An automated system designed to solve Wordle-like puzzles using a systematic approach with regex pattern matching and dictionary filtering.
+A TypeScript-based service that solves Wordle puzzles of various sizes.
 
 ## Credits
 
 - English Dictionary: [dwyl/english-words](https://github.com/dwyl/english-words) - Comprehensive English word list used for dictionary matching
 
-## Overview
+## Features
 
-This project implements an automated solution for solving Wordle-like puzzles. It supports variable word lengths (default: 10 characters) and uses a combination of systematic character testing and pattern matching to efficiently guess words.
-
-## Technical Implementation
-
-### Core Algorithm
-
-The solver uses a multi-step approach:
-1. Initial Guess: Starts with a systematic first guess using characters from the alphabet
-2. Pattern Recognition: Analyzes feedback from each guess to identify correct character positions
-3. Dictionary Filtering: Maintains a filtered list of possible words based on confirmed characters
-4. Regex Pattern Matching: Uses dynamic regex patterns to narrow down possible solutions
-
-### Key Features
-
-- Support for variable word lengths
-- Efficient dictionary filtering
-- Real-time feedback processing
-- Multiple game modes (daily, random, specific word)
-
-## API Integration
-
-The system integrates with a Wordle API endpoint at `wordle.votee.dev:8000` supporting three main endpoints:
-- `/daily` - Daily word challenge
-- `/random` - Random word challenge
-- `/word/{word}` - Specific word challenge
+- Solves Wordle puzzles of sizes 5-18
+- Supports both daily and random word puzzles
+- Input validation using Zod
+- Comprehensive error handling
+- Logging system with Winston
+- Code quality tools (ESLint, Prettier)
+- Git hooks with Husky
+- TypeScript strict mode
 
 ## Project Structure
 
 ```
-src/
-├── controllers/
-│   └── wordle.controller.ts
-├── routes/
-│   └── wordle.routes.ts
-├── services/
-│   └── wordle.service.ts
-├── types/
-│   └── user.types.ts
-└── utils/
-    └── api.ts
+.
+├── src/
+│   ├── controllers/     # Request handlers
+│   ├── routes/         # API routes
+│   ├── services/       # Business logic
+│   ├── middleware/     # Express middleware
+│   ├── utils/          # Utility functions
+│   ├── types/          # TypeScript type definitions
+│   └── const/          # Constants and configurations
+├── logs/              # Application logs
+├── dist/              # Compiled JavaScript
+├── node_modules/      # Dependencies
+├── .eslintrc.js      # ESLint configuration
+├── .prettierrc       # Prettier configuration
+├── jest.config.js    # Jest configuration
+├── tsconfig.json     # TypeScript configuration
+└── package.json      # Project metadata and dependencies
 ```
 
-## Current Solution Analysis
+## Prerequisites
 
-The current implementation uses a character-by-character approach with the following strategy:
-1. Makes an initial guess using the first N characters of the alphabet
-2. Records correct character positions
-3. Filters a dictionary of words based on confirmed positions
-4. Continues guessing from the filtered word list until the solution is found
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-### Strengths
-- Simple and straightforward implementation
-- Guaranteed to find the solution
-- Efficient dictionary filtering
-
-### Areas for Improvement
-- Could implement information theory for better initial guesses
-- Potential for implementing letter frequency analysis
-- Could add word probability scoring for more efficient guessing
-
-## Setup and Usage
+## Installation
 
 1. Clone the repository
 2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+## Development
+
+Start the development server:
 ```bash
-npm install
-```
-3. Compile TS to JS
-```bash
-npm run build
-```
-3. Ensure you have the word dictionary file (`eng_words.txt`) in the project root
-4. Run the application:
-```bash
-npm start
+npm run dev
 ```
 
-## Dependencies
+## Scripts
 
-- Node.js
-- Axios for API calls
-- TypeScript
-- File system access for dictionary loading
+- `npm start` - Start the production server
+- `npm run dev` - Start the development server
+- `npm run build` - Build the TypeScript code
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
 
-## Future Improvements
+## Error Handling
 
-1. The generated Regex did not perfectly, [a-z] should become [b-z] when "a" is absent or present ( wrong position )
-2. Add letter frequency analysis
-3. Implement word commonality scoring
-4. Add performance metrics tracking
-5. Implement caching for frequently used patterns
+The application uses a centralized error handling system with custom `AppError` class. All operational errors are properly logged and returned to the client with appropriate HTTP status codes.
+
+## Logging
+
+Logging is implemented using Winston with the following features:
+- Console logging in development
+- File-based logging in production
+- Error logs in `logs/error.log`
+- Combined logs in `logs/combined.log`
+- JSON format for better parsing
+- Timestamp and error stack traces
+
+## Code Quality
+
+- ESLint for code linting
+- Prettier for code formatting
+- Husky for Git hooks
+- Pre-commit hooks for linting and formatting
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run tests and ensure they pass
+4. Submit a pull request
+
+## License
+
+MIT

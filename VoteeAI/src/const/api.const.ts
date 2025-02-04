@@ -7,5 +7,5 @@ const WORDLE_API_URL = 'https://wordle.votee.dev:8000';
  */
 
 export const API_CONST = {
-  WORDLE_API_URL
+  WORDLE_API_URL,
 };
